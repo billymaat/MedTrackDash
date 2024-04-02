@@ -8,17 +8,17 @@ namespace MedTrackDash.Controllers
 	[Route("[controller]")]
 	public class PatientController : Controller
 	{
-		private readonly IPatientDatabaseService _databaseService;
+		private readonly IPatientDatabaseService _patientDatabaseService;
 
-		public PatientController(IPatientDatabaseService databaseService)
+		public PatientController(IPatientDatabaseService patientDatabaseService)
 		{
-			_databaseService = databaseService;
+			_patientDatabaseService = patientDatabaseService;
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
 		{
-			var patients = await _databaseService.GetAllPatients();
+			var patients = await _patientDatabaseService.GetAllPatients();
 
 			return Ok(patients);
 		}
@@ -26,7 +26,7 @@ namespace MedTrackDash.Controllers
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetById(int id)
 		{
-			var patient = await _databaseService.GetPatientById(id);
+			var patient = await _patientDatabaseService.GetPatientById(id);
 
 			if (patient != null)
 			{
@@ -39,21 +39,21 @@ namespace MedTrackDash.Controllers
 		[HttpPut("{id}")]
 		public async Task<IActionResult> Update(int id, PatientUpdateDto patientUpdateDto)
 		{
-			var success = await _databaseService.UpdatePatient(id, patientUpdateDto);
+			var success = await _patientDatabaseService.UpdatePatient(id, patientUpdateDto);
 			return Ok(success);
 		}
 
 		[HttpPut]
 		public async Task<IActionResult> Add(PatientAddDto patientAddDto)
 		{
-			await _databaseService.AddPatient(patientAddDto);
+			await _patientDatabaseService.AddPatient(patientAddDto);
 			return Ok();
 		}
 
 		[HttpDelete]
 		public async Task<IActionResult> DeleteById(int id)
 		{
-			if (await _databaseService.DeletePatient(id))
+			if (await _patientDatabaseService.DeletePatient(id))
 			{
 				return Ok();
 			}
@@ -61,6 +61,4 @@ namespace MedTrackDash.Controllers
 			return NotFound();
 		}
 	}
-
-
 }

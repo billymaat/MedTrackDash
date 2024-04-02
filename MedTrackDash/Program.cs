@@ -21,6 +21,7 @@ namespace MedTrackDash
 			builder.Services.AddSwaggerGen();
 
 			builder.Services.AddScoped<IPatientDatabaseService, PatientDatabaseService>();
+			builder.Services.AddScoped<IDoctorDatabaseService, DoctorDatabaseService>();
 
 			builder.Services.AddDbContext<MedTrackContext>(options =>
 			{
