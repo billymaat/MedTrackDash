@@ -1,15 +1,17 @@
 ﻿using MedTrackDash.Data;
+using MedTrackDash.Dtos;
 using MedTrackDash.Entities;
 using MedTrackDash.Extensions;
 using Microsoft.EntityFrameworkCore;
-using MedTrackDash.Dtos;
 
-public class DatabaseService : IDatabaseService
+namespace MedTrackDash.Services;
+
+public class PatientDatabaseService : IPatientDatabaseService
 {
 	private readonly MedTrackContext _context;
-	private readonly ILogger<DatabaseService> _logger;
+	private readonly ILogger<PatientDatabaseService> _logger;
 
-	public DatabaseService(MedTrackContext context, ILogger<DatabaseService> logger)
+	public PatientDatabaseService(MedTrackContext context, ILogger<PatientDatabaseService> logger)
 	{
 		_context = context;
 		_logger = logger;
@@ -59,9 +61,12 @@ public class DatabaseService : IDatabaseService
 		return patients;
 	}
 
-	public async Task UpdatePatient(int id, PatientUpdateDto patientUpdateDto)
+	public async Task<bool> UpdatePatient(int id, PatientUpdateDto patientUpdateDto)
 	{
-		var patientEntity = await _context.Patients.FindAsync(id);
+		var patientEntity = await _context.Patients
+			.Where(p => p.Id == id)
+			.FirstOrDefaultAsync();
+
 		if (patientEntity != null)
 		{
 			patientEntity.FirstName = patientUpdateDto.FirstName;
@@ -71,14 +76,14 @@ public class DatabaseService : IDatabaseService
 			
 			await _context.SaveChangesAsync();
 			_logger.LogInformation("Patient information updated in the database.");
+			return true;
 		}
-		else
-		{
-			_logger.LogInformation("Patient not found in the database.");
-		}
+		
+		_logger.LogInformation("Patient not found in the database.");
+		return false;
 	}
 
-	public async Task DeletePatient(int id)
+	public async Task<bool> DeletePatient(int id)
 	{
 		PatientEntity patientEntity = await _context.Patients.FindAsync(id);
 		if (patientEntity != null)
@@ -86,10 +91,10 @@ public class DatabaseService : IDatabaseService
 			_context.Patients.Remove(patientEntity);
 			await _context.SaveChangesAsync();
 			_logger.LogInformation("Patient deleted from the database.");
+			return true;
 		}
-		else
-		{
-			_logger.LogInformation("Patient not found in the database.");
-		}
+
+		_logger.LogInformation("Patient not found in the database.");
+		return false;
 	}
 }

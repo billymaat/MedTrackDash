@@ -1,5 +1,6 @@
 
 using MedTrackDash.Data;
+using MedTrackDash.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -19,7 +20,7 @@ namespace MedTrackDash
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
-			builder.Services.AddScoped<IDatabaseService, DatabaseService>();
+			builder.Services.AddScoped<IPatientDatabaseService, PatientDatabaseService>();
 
 			builder.Services.AddDbContext<MedTrackContext>(options =>
 			{

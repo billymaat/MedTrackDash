@@ -1,4 +1,5 @@
 ﻿using MedTrackDash.Dtos;
+using MedTrackDash.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedTrackDash.Controllers
@@ -7,9 +8,9 @@ namespace MedTrackDash.Controllers
 	[Route("[controller]")]
 	public class PatientController : Controller
 	{
-		private readonly IDatabaseService _databaseService;
+		private readonly IPatientDatabaseService _databaseService;
 
-		public PatientController(IDatabaseService databaseService)
+		public PatientController(IPatientDatabaseService databaseService)
 		{
 			_databaseService = databaseService;
 		}
@@ -35,11 +36,29 @@ namespace MedTrackDash.Controllers
 			return NotFound();
 		}
 
+		[HttpPut("{id}")]
+		public async Task<IActionResult> Update(int id, PatientUpdateDto patientUpdateDto)
+		{
+			var success = await _databaseService.UpdatePatient(id, patientUpdateDto);
+			return Ok(success);
+		}
+
 		[HttpPut]
 		public async Task<IActionResult> Add(PatientAddDto patientAddDto)
 		{
 			await _databaseService.AddPatient(patientAddDto);
 			return Ok();
+		}
+
+		[HttpDelete]
+		public async Task<IActionResult> DeleteById(int id)
+		{
+			if (await _databaseService.DeletePatient(id))
+			{
+				return Ok();
+			}
+
+			return NotFound();
 		}
 	}
 
