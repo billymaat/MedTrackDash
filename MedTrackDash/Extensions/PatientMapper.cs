@@ -11,7 +11,7 @@ namespace MedTrackDash.Extensions
 		/// </summary>
 		/// <param name="patient">The Patient object to convert.</param>
 		/// <returns>The corresponding PatientDto object.</returns>
-		public static PatientDto ToDto(Patient patient)
+		public static PatientDto ToDto(this Patient patient)
 		{
 			return new PatientDto
 			{
@@ -27,7 +27,7 @@ namespace MedTrackDash.Extensions
 		/// </summary>
 		/// <param name="patientDto">The PatientDto object to convert.</param>
 		/// <returns>The corresponding Patient object.</returns>
-		public static Patient ToPatient(PatientDto patientDto)
+		public static Patient ToPatient(this PatientDto patientDto)
 		{
 			return new Patient
 			{

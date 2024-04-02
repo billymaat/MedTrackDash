@@ -1,4 +1,9 @@
 
+using MedTrackDash.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
 namespace MedTrackDash
 {
 	public class Program
@@ -14,6 +19,13 @@ namespace MedTrackDash
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
+			builder.Services.AddScoped<IDatabaseService, DatabaseService>();
+
+			builder.Services.AddDbContext<MedTrackContext>(options =>
+			{
+				options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MedTrackDashInMemoryDb"));
+			});
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -26,7 +38,6 @@ namespace MedTrackDash
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();
-
 
 			app.MapControllers();
 

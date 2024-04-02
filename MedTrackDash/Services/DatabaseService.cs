@@ -4,7 +4,7 @@ using MedTrackDash.Models;
 using MedTrackDash.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-public class DatabaseService
+public class DatabaseService : IDatabaseService
 {
 	private readonly MedTrackContext _context;
 	private readonly ILogger<DatabaseService> _logger;
@@ -13,6 +13,11 @@ public class DatabaseService
 	{
 		_context = context;
 		_logger = logger;
+
+		if (!_context.Patients.Any())
+		{
+			SeedData.Seed(context);
+		}
 	}
 
 	public async Task AddPatient(Patient patient)
