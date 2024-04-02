@@ -20,6 +20,6 @@
 		/// <summary>
 		/// Gets or sets the specialty of the doctor.
 		/// </summary>
-		public string Specialty { get; set; }
+		public string Specialty { get; set; } 
 	}
 }

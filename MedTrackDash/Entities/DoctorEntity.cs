@@ -21,5 +21,10 @@
 		/// Gets or sets the specialty of the doctor.
 		/// </summary>
 		public string Specialty { get; set; }
+
+		/// <summary>
+		/// Gets or sets the patients of the doctor
+		/// </summary>
+		public ICollection<PatientEntity> Patients { get; } = new List<PatientEntity>();
 	}
 }

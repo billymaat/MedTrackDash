@@ -10,9 +10,8 @@ namespace MedTrackDash.Data
 		/// <param name="medTrackContext">The MedTrackContext to seed.</param>
 		public static void Seed(MedTrackContext medTrackContext)
 		{
-			medTrackContext.Patients.AddRange(
-				new List<PatientEntity>()
-				{
+			var patients = new List<PatientEntity>()
+			{
 				new PatientEntity() { FirstName = "John", Surname = "Smith", Age = 35, Gender = "Male" },
 				new PatientEntity() { FirstName = "Jane", Surname = "Doe", Age = 28, Gender = "Female" },
 				new PatientEntity() { FirstName = "Michael", Surname = "Johnson", Age = 42, Gender = "Male" },
@@ -33,8 +32,31 @@ namespace MedTrackDash.Data
 				new PatientEntity() { FirstName = "Charlotte", Surname = "Garcia", Age = 25, Gender = "Female" },
 				new PatientEntity() { FirstName = "Michael", Surname = "Rodriguez", Age = 44, Gender = "Male" },
 				new PatientEntity() { FirstName = "Amelia", Surname = "Perez", Age = 39, Gender = "Female" }
-				}
-			);
+			};
+
+			var doctors = new List<DoctorEntity>()
+			{
+				new DoctorEntity() { FirstName = "David", LastName = "Smith", Specialty = "Cardiology" },
+				new DoctorEntity() { FirstName = "Sarah", LastName = "Johnson", Specialty = "Dermatology" },
+				new DoctorEntity() { FirstName = "Michael", LastName = "Brown", Specialty = "Pediatrics" },
+				new DoctorEntity() { FirstName = "Emily", LastName = "Taylor", Specialty = "Neurology" },
+				new DoctorEntity() { FirstName = "William", LastName = "Jones", Specialty = "Oncology" },
+				new DoctorEntity() { FirstName = "Sophia", LastName = "Miller", Specialty = "Orthopedics" },
+				new DoctorEntity() { FirstName = "Daniel", LastName = "Wilson", Specialty = "Psychiatry" },
+				new DoctorEntity() { FirstName = "Olivia", LastName = "Anderson", Specialty = "Radiology" },
+				new DoctorEntity() { FirstName = "James", LastName = "Harris", Specialty = "Urology" },
+				new DoctorEntity() { FirstName = "Emma", LastName = "Martinez", Specialty = "Gastroenterology" }
+			};
+
+			foreach (var patient in patients)
+			{
+				int doctorIndex = new Random().Next(0, doctors.Count);
+				var doctor = doctors[doctorIndex];
+				patient.Doctor = doctor;
+			}
+
+			medTrackContext.Patients.AddRange(patients);
+			medTrackContext.Doctors.AddRange(doctors);
 
 			medTrackContext.SaveChanges();
 		}
