@@ -1,5 +1,4 @@
 ﻿using MedTrackDash.Dtos;
-using MedTrackDash.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedTrackDash.Controllers
@@ -20,7 +19,7 @@ namespace MedTrackDash.Controllers
 		{
 			var patients = await _databaseService.GetAllPatients();
 
-			return Ok(patients.Select(p => p.ToDto()));
+			return Ok(patients);
 		}
 
 		[HttpGet("{id}")]
@@ -30,10 +29,17 @@ namespace MedTrackDash.Controllers
 
 			if (patient != null)
 			{
-				return Ok(patient.ToDto());
+				return Ok(patient);
 			}
 
 			return NotFound();
+		}
+
+		[HttpPut]
+		public async Task<IActionResult> Add(PatientAddDto patientAddDto)
+		{
+			await _databaseService.AddPatient(patientAddDto);
+			return Ok();
 		}
 	}
 

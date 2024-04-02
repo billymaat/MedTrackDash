@@ -1,8 +1,8 @@
 ﻿using MedTrackDash.Data;
 using MedTrackDash.Entities;
-using MedTrackDash.Models;
 using MedTrackDash.Extensions;
 using Microsoft.EntityFrameworkCore;
+using MedTrackDash.Dtos;
 
 public class DatabaseService : IDatabaseService
 {
@@ -20,43 +20,54 @@ public class DatabaseService : IDatabaseService
 		}
 	}
 
-	public async Task AddPatient(Patient patient)
+	public async Task AddPatient(PatientAddDto patientAddDto)
 	{
-		PatientEntity patientEntity = patient.ToPatientEntity();
+		var patientEntity = new PatientEntity()
+		{
+			FirstName = patientAddDto.FirstName,
+			Surname = patientAddDto.Surname,
+			Age = patientAddDto.Age,
+			Gender = patientAddDto.Gender
+		};
+
 		_context.Patients.Add(patientEntity);
 		await _context.SaveChangesAsync();
 		_logger.LogInformation("Patient added to the database.");
 	}
 
-	public async Task<Patient> GetPatientById(int id)
+	public async Task<PatientDto> GetPatientById(int id)
 	{
-		PatientEntity patientEntity = await _context.Patients.FindAsync(id);
+		var patientEntity = await _context.Patients
+			.Where(p => p.Id == id)
+			.FirstOrDefaultAsync();
+
 		if (patientEntity != null)
 		{
-			return patientEntity.ToPatient();
+			return patientEntity.ToDto();
 		}
+
 		_logger.LogInformation("Patient not found in the database.");
 		return null;
 	}
 
-	public async Task<List<Patient>> GetAllPatients()
+	public async Task<List<PatientDto>> GetAllPatients()
 	{
 		var patients = await _context.Patients
-			.Select(p => p.ToPatient())
+			.Select(p => p.ToDto())
 			.ToListAsync();
 		_logger.LogInformation("Retrieved all patients from the database.");
 		return patients;
 	}
 
-	public async Task UpdatePatient(int id, Patient updatedPatient)
+	public async Task UpdatePatient(int id, PatientUpdateDto patientUpdateDto)
 	{
-		PatientEntity patientEntity = await _context.Patients.FindAsync(id);
+		var patientEntity = await _context.Patients.FindAsync(id);
 		if (patientEntity != null)
 		{
-			patientEntity.FirstName = updatedPatient.FirstName;
-			patientEntity.Surname = updatedPatient.Surname;
-			patientEntity.Age = updatedPatient.Age;
-			patientEntity.Gender = updatedPatient.Gender; 
+			patientEntity.FirstName = patientUpdateDto.FirstName;
+			patientEntity.Surname = patientUpdateDto.Surname;
+			patientEntity.Age = patientUpdateDto.Age;
+			patientEntity.Gender = patientUpdateDto.Gender; 
 			
 			await _context.SaveChangesAsync();
 			_logger.LogInformation("Patient information updated in the database.");

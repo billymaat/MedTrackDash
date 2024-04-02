@@ -69,5 +69,21 @@ namespace MedTrackDash.Extensions
 				Gender = patientEntity.Gender
 			};
 		}
+
+		/// <summary>
+		/// Converts a PatientEntity object to a Patient object.
+		/// </summary>
+		/// <param name="patientEntity">The PatientEntity object to convert.</param>
+		/// <returns>The corresponding Patient object.</returns>
+		public static PatientDto ToDto(this PatientEntity patientEntity)
+		{
+			return new PatientDto
+			{
+				FirstName = patientEntity.FirstName,
+				Surname = patientEntity.Surname,
+				Age = patientEntity.Age,
+				Gender = patientEntity.Gender
+			};
+		}
 	}
 }
