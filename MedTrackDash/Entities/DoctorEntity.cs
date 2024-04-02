@@ -25,6 +25,6 @@
 		/// <summary>
 		/// Gets or sets the patients of the doctor
 		/// </summary>
-		public ICollection<PatientEntity> Patients { get; } = new List<PatientEntity>();
+		public List<PatientEntity> Patients { get; } = new List<PatientEntity>();
 	}
 }

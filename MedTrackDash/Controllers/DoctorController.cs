@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MedTrackDash.Controllers
 {
-
 	[ApiController]
 	[Route("[controller]")]
 	public class DoctorController : ControllerBase
@@ -61,6 +60,13 @@ namespace MedTrackDash.Controllers
 				return Ok();
 			}
 			return NotFound();
+		}
+
+		[HttpGet("patients/{id}")]
+		public async Task<IActionResult> GetPatients(int id)
+		{
+			var patients = await _doctorDatabaseService.GetDoctorPatientsById(id);
+			return Ok(patients);
 		}
 	}
 
