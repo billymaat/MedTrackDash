@@ -17,5 +17,10 @@
 		/// The Doctor reference navigation
 		/// </summary>
 		public DoctorEntity? Doctor { get; set; } = null!;
+
+		/// <summary>
+		/// Gets or sets the patient's appointments.
+		/// </summary>
+		public List<AppointmentEntity> Appointments { get; set; } = new List<AppointmentEntity>();
 	}
 }

@@ -37,4 +37,18 @@ public interface IAppointmentDatabaseService
 	/// <param name="id">The ID of the appointment to delete.</param>
 	/// <returns>True if the appointment was deleted successfully, otherwise false.</returns>
 	Task<bool> DeleteAppointment(int id);
+
+	/// <summary>
+	/// Retrieves all appointments associated with a specific doctor.
+	/// </summary>
+	/// <param name="id">The ID of the doctor.</param>
+	/// <returns>A list of appointments associated with the doctor, or null if the doctor is not found.</returns>
+	Task<List<AppointmentDto>?> GetDoctorAppointments(int id);
+
+	/// <summary>
+	/// Retrieves all appointments associated with a specific patient.
+	/// </summary>
+	/// <param name="id">The ID of the patient.</param>
+	/// <returns>A list of appointments associated with the patient, or null if the patient is not found.</returns>
+	Task<List<AppointmentDto>?> GetPatientAppointments(int id);
 }

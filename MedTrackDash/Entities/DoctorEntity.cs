@@ -26,5 +26,10 @@
 		/// Gets or sets the patients of the doctor
 		/// </summary>
 		public List<PatientEntity> Patients { get; } = new List<PatientEntity>();
+
+		/// <summary>
+		/// Gets or sets the patient's appointments.
+		/// </summary>
+		public List<AppointmentEntity> Appointments { get; set; } = new List<AppointmentEntity>();
 	}
 }

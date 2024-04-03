@@ -9,6 +9,5 @@ namespace MedTrackDash.Services
 		Task<List<DoctorDto>> GetAllDoctors();
 		Task<bool> UpdateDoctor(int id, DoctorUpdateDto doctorUpdateDto);
 		Task<bool> DeleteDoctor(int id);
-		Task<List<PatientDto>?> GetDoctorPatientsById(int id);
-	}
+		Task<List<PatientDto>?> GetDoctorPatientsById(int id); }
 }

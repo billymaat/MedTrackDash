@@ -51,14 +51,6 @@ namespace MedTrackDash.Services
 			return null;
 		}
 
-		//public async Task<List<PatientDto>> GetDoctorPatientsById(int id)
-		//{
-		//	return await _context.Patients
-		//		.Where(p => p.DoctorId == id)
-		//		.Select(p => p.ToDto())
-		//		.ToListAsync();
-		//}
-
 		public async Task<List<PatientDto>?> GetDoctorPatientsById(int id)
 		{
 			var doc = await _context.Doctors
