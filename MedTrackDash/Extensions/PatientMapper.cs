@@ -18,7 +18,7 @@ namespace MedTrackDash.Extensions
 				FirstName = patient.FirstName,
 				Surname = patient.Surname,
 				Age = patient.Age,
-				Gender = patient.Gender
+				Gender = (Dtos.Gender)patient.Gender
 			};
 		}
 
@@ -34,7 +34,7 @@ namespace MedTrackDash.Extensions
 				FirstName = patientDto.FirstName,
 				Surname = patientDto.Surname,
 				Age = patientDto.Age,
-				Gender = patientDto.Gender
+				Gender = (Models.Gender)patientDto.Gender
 			};
 		}
 
@@ -50,7 +50,7 @@ namespace MedTrackDash.Extensions
 				FirstName = patient.FirstName,
 				Surname = patient.Surname,
 				Age = patient.Age,
-				Gender = patient.Gender
+				Gender = (Entities.Gender)patient.Gender
 			};
 		}
 
@@ -66,7 +66,7 @@ namespace MedTrackDash.Extensions
 				FirstName = patientEntity.FirstName,
 				Surname = patientEntity.Surname,
 				Age = patientEntity.Age,
-				Gender = patientEntity.Gender
+				Gender = (Models.Gender)patientEntity.Gender
 			};
 		}
 
@@ -82,7 +82,7 @@ namespace MedTrackDash.Extensions
 				FirstName = patientEntity.FirstName,
 				Surname = patientEntity.Surname,
 				Age = patientEntity.Age,
-				Gender = patientEntity.Gender
+				Gender = (Dtos.Gender)patientEntity.Gender
 			};
 		}
 	}

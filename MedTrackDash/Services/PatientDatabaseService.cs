@@ -29,7 +29,7 @@ public class PatientDatabaseService : IPatientDatabaseService
 			FirstName = patientAddDto.FirstName,
 			Surname = patientAddDto.Surname,
 			Age = patientAddDto.Age,
-			Gender = patientAddDto.Gender
+			Gender = (Entities.Gender)patientAddDto.Gender
 		};
 
 		_context.Patients.Add(patientEntity);
@@ -72,7 +72,7 @@ public class PatientDatabaseService : IPatientDatabaseService
 			patientEntity.FirstName = patientUpdateDto.FirstName;
 			patientEntity.Surname = patientUpdateDto.Surname;
 			patientEntity.Age = patientUpdateDto.Age;
-			patientEntity.Gender = patientUpdateDto.Gender; 
+			patientEntity.Gender = (Entities.Gender)patientUpdateDto.Gender; 
 			
 			await _context.SaveChangesAsync();
 			_logger.LogInformation("Patient information updated in the database.");

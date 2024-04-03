@@ -20,7 +20,7 @@
 		/// <summary>
 		/// Gets or sets the gender of the patient.
 		/// </summary>
-		public string Gender { get; set; }
+		public Gender Gender { get; set; }
 	}
 
 }
