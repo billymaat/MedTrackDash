@@ -20,5 +20,21 @@ namespace MedTrackDash.Extensions
 				Route = medicineDto.Route
 			};
 		}
+
+		/// <summary>
+		/// Converts a MedicineEntity object to a MedicineDto object.
+		/// </summary>
+		/// <param name="medicineEntity">The MedicineEntity to convert.</param>
+		/// <returns>The converted MedicineDto object.</returns>
+		public static MedicineDto ToDto(this MedicineEntity medicineEntity)
+		{
+			return new MedicineDto
+			{
+				Id = medicineEntity.Id,
+				Name = medicineEntity.Name,
+				Description = medicineEntity.Description,
+				Route = medicineEntity.Route
+			};
+		}
 	}
 }

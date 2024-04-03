@@ -27,10 +27,10 @@
 		/// </summary>
 		public DoctorEntity Doctor { get; set; }
 
-		/// <summary>
-		/// Gets or sets the ID of the medicine prescribed.
-		/// </summary>
-		public int MedicineId { get; set; }
+		///// <summary>
+		///// Gets or sets the ID of the medicine prescribed.
+		///// </summary>
+		//public int MedicineId { get; set; }
 
 		/// <summary>
 		/// Gets or sets the medicine prescribed.

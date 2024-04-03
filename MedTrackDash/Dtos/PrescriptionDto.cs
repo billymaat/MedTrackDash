@@ -11,19 +11,14 @@
 		public int Id { get; set; }
 
 		/// <summary>
-		/// Gets or sets the ID of the patient for whom the prescription is made.
-		/// </summary>
-		public int PatientId { get; set; }
-
-		/// <summary>
 		/// Gets or sets the ID of the doctor who issued the prescription.
 		/// </summary>
-		public int DoctorId { get; set; }
+		public DoctorDto Doctor { get; set; }
 
 		/// <summary>
 		/// Gets or sets the ID of the medicine prescribed.
 		/// </summary>
-		public int MedicineId { get; set; }
+		public MedicineDto Medicine { get; set; }
 
 		/// <summary>
 		/// Gets or sets the date when the prescription was issued.

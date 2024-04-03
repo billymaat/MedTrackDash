@@ -21,6 +21,9 @@
 		/// Gets or sets the route of administration of the medicine (e.g., oral, topical, injection).
 		/// </summary>
 		public string Route { get; set; }
+
+		public int PrescriptionId { get; set; }
+		public PrescriptionEntity Prescription { get; set; }
 	}
 }
 
