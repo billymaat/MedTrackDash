@@ -97,4 +97,51 @@ public class PatientDatabaseService : IPatientDatabaseService
 		_logger.LogInformation("Patient not found in the database.");
 		return false;
 	}
+
+	public async Task<bool> AddPrescription(int patientId, PrescriptionAddDto prescriptionAddDto)
+	{
+		// Retrieve the patient entity from the database
+		var patientEntity = await _context.Patients.FindAsync(patientId);
+
+		if (patientEntity == null)
+		{
+			// Handle the case when the patient is not found
+			return false;
+		}
+
+		var medicine = prescriptionAddDto.Medicine.ToEntity();
+		
+		_context.Medicines.Add(medicine);
+
+		// Create a new PrescriptionEntity and populate it with the provided data
+		var prescriptionEntity = new PrescriptionEntity
+		{
+			PatientId = patientId,
+			DoctorId = prescriptionAddDto.DoctorId,
+			Medicine = medicine,
+			IssueDate = DateTime.UtcNow,
+			StartDate = prescriptionAddDto.StartDate,
+			EndDate = prescriptionAddDto.EndDate
+		};
+
+		// Add the prescription entity to the context
+		_context.Prescriptions.Add(prescriptionEntity);
+
+		// Save changes to the database
+		await _context.SaveChangesAsync();
+
+		return true;
+	}
+
+	public async Task<List<PrescriptionDto>?> GetPatientPrescriptions(int id)
+	{
+		var prescriptions = await _context.Patients.Where(p => p.Id == id)
+			.Select(p => new
+			{
+				Prescription = p.Prescriptions.Select(p => p.ToDto())
+			})
+			.FirstOrDefaultAsync();
+
+		return prescriptions?.Prescription.ToList();
+	}
 }

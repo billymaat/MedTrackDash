@@ -60,5 +60,25 @@ namespace MedTrackDash.Controllers
 
 			return NotFound();
 		}
+
+		[HttpGet("{id}/prescriptions")]
+		public async Task<IActionResult> GetPrescriptions(int id)
+		{
+			var prescriptions = await _patientDatabaseService.GetPatientPrescriptions(id);
+
+			if (prescriptions != null)
+			{
+				return Ok(prescriptions);
+			}
+
+			return NotFound();
+		}
+
+		[HttpPut("{id}/addprescription")]
+		public async Task<IActionResult> AddPrescription(int id, PrescriptionAddDto prescriptionAddDto)
+		{
+			await _patientDatabaseService.AddPrescription(id, prescriptionAddDto);
+			return Ok();
+		}
 	}
 }

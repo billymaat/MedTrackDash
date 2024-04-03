@@ -22,5 +22,10 @@
 		/// Gets or sets the patient's appointments.
 		/// </summary>
 		public List<AppointmentEntity> Appointments { get; set; } = new List<AppointmentEntity>();
+
+		/// <summary>
+		/// Gets or sets the patient's prescriptions.
+		/// </summary>
+		public List<PrescriptionEntity> Prescriptions { get; set; } = new List<PrescriptionEntity>();
 	}
 }

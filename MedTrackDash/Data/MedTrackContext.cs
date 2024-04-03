@@ -12,5 +12,7 @@ namespace MedTrackDash.Data
 		public DbSet<PatientEntity> Patients { get; set; }
 		public DbSet<DoctorEntity> Doctors { get; set; }
 		public DbSet<AppointmentEntity> Appointments { get; set; }
+		public DbSet<PrescriptionEntity> Prescriptions { get; set; }
+		public DbSet<MedicineEntity> Medicines { get; set; }
 	}
 }
