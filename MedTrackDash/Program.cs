@@ -22,6 +22,7 @@ namespace MedTrackDash
 
 			builder.Services.AddScoped<IPatientDatabaseService, PatientDatabaseService>();
 			builder.Services.AddScoped<IDoctorDatabaseService, DoctorDatabaseService>();
+			builder.Services.AddScoped<IAppointmentDatabaseService, AppointmentDatabaseService>();
 
 			builder.Services.AddDbContext<MedTrackContext>(options =>
 			{
