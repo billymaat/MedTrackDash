@@ -135,7 +135,7 @@ public class PatientDatabaseService : IPatientDatabaseService
 
 	public async Task<List<PrescriptionDto>?> GetPatientPrescriptions(int id)
 	{
-		var prescriptions = _context.Patients
+		var prescriptions = await _context.Patients
 			.Where(p => p.Id == id)
 			.Include(p => p.Prescriptions)
 			.ThenInclude(p => p.Medicine)
@@ -145,7 +145,7 @@ public class PatientDatabaseService : IPatientDatabaseService
 			{
 				Prescription = p.Prescriptions.Select(p => p.ToDto())
 			})
-			.FirstOrDefault();
+			.FirstOrDefaultAsync();
 
 		return prescriptions?.Prescription.ToList();
 	}
