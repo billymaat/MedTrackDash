@@ -180,7 +180,7 @@ public class PatientDatabaseService : IPatientDatabaseService
 		var kk = _context.Patients
 			.Where(p => p.Id == id)
 			.Include(p => p.Prescriptions)
-			.ThenInclude(p => p.Medicine).ToList();
+			.ThenInclude(p => p.Medicine).AsEnumerable();
 
 
 		var prescriptions	= kk.Select(p => new

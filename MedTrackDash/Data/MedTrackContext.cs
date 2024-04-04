@@ -14,5 +14,11 @@ namespace MedTrackDash.Data
 		public DbSet<AppointmentEntity> Appointments { get; set; }
 		public DbSet<PrescriptionEntity> Prescriptions { get; set; }
 		public DbSet<MedicineEntity> Medicines { get; set; }
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder.EnableSensitiveDataLogging();
+			base.OnConfiguring(optionsBuilder);
+		}
 	}
 }

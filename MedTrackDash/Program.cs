@@ -2,9 +2,8 @@
 using MedTrackDash.Data;
 using MedTrackDash.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-
+using Serilog;
+using Serilog.Extensions.Logging;
 namespace MedTrackDash
 {
 	public class Program
@@ -24,11 +23,18 @@ namespace MedTrackDash
 			builder.Services.AddScoped<IDoctorDatabaseService, DoctorDatabaseService>();
 			builder.Services.AddScoped<IAppointmentDatabaseService, AppointmentDatabaseService>();
 
+			var connectionString = builder.Configuration.GetConnectionString("AppContext");
 			builder.Services.AddDbContext<MedTrackContext>(options =>
-			{
-				options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MedTrackDashInMemoryDb"));
-			});
+			
+				// options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MedTrackDashInMemoryDb"));
+				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), 
+					ServiceLifetime.Transient);
 
+			var log = new LoggerConfiguration()
+				.ReadFrom.Configuration(builder.Configuration)
+				.CreateLogger();
+
+			builder.Services.AddSerilog(log);
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
