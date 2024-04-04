@@ -15,7 +15,7 @@ namespace MedTrackDash.Extensions
 			return new PrescriptionDto
 			{
 				Id = prescription.Id,
-				//Doctor = prescription.Doctor.ToDto(),
+				Doctor = prescription.Doctor.ToDto(),
 				Medicine = prescription.Medicine.ToDto(),
 				IssueDate = prescription.IssueDate,
 				StartDate = prescription.StartDate,

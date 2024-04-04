@@ -135,83 +135,17 @@ public class PatientDatabaseService : IPatientDatabaseService
 
 	public async Task<List<PrescriptionDto>?> GetPatientPrescriptions(int id)
 	{
-		//var pp = await _context.Patients.Where(p => p.Id == id)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Medicine)
-		//	.ToListAsync();
-
-		//var kk = await _context.Patients.Where(p => p.Id == id)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Medicine)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Doctor)
-		//	.ToListAsync();
-
-		//var gg = await _context.Patients.Where(p => p.Id == id)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Medicine)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Doctor)
-		//	.Select(p => new
-		//	{
-		//		Prescription = p.Prescriptions.Select(p => p.ToDto())
-		//	})
-		//	.ToListAsync();
-
-		//var ll = await _context.Patients.Where(p => p.Id == id)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Medicine)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Doctor)
-		//	.Select(o => o)
-		//	.ToListAsync();
-
-		//var nn = await _context.Patients.Where(p => p.Id == id)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Medicine)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Doctor)
-		//	.Select(o => new
-		//	{
-		//		Patient = o
-		//	})
-		//	.ToListAsync();
-
-		var kk = _context.Patients
+		var prescriptions = _context.Patients
 			.Where(p => p.Id == id)
 			.Include(p => p.Prescriptions)
-			.ThenInclude(p => p.Medicine).AsEnumerable();
-
-
-		var prescriptions	= kk.Select(p => new
+			.ThenInclude(p => p.Medicine)
+			.Include(p => p.Prescriptions)
+			.ThenInclude(p => p.Doctor)
+			.Select(p => new
 			{
 				Prescription = p.Prescriptions.Select(p => p.ToDto())
 			})
 			.FirstOrDefault();
-
-		//var prescriptions = await _context.Patients.Where(p => p.Id == id)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Medicine)
-		//	.Include(p => p.Prescriptions)
-		//	.ThenInclude(p => p.Doctor)
-		//	.Select(p => new
-		//	{
-		//		Prescription = p.Prescriptions
-		//			.Select(p => p.ToDto())
-		//	})
-		//	.FirstOrDefaultAsync();
-
-		//var prescriptions = await _context.Patients.Where(p => p.Id == id)
-		//	.Include(p => p.Prescriptions)
-		//		.ThenInclude(p => p.Select(o => o.Medicine))
-		//	// .Include(p => p.Prescriptions)
-		//	// 	.ThenInclude(p => p.Select(o => o.Doctor))
-		//	.Select(p => new
-		//	{
-		//		Prescription = p.Prescriptions
-		//			.Select(p => p.ToDto())
-		//	})
-		//	.FirstOrDefaultAsync();
 
 		return prescriptions?.Prescription.ToList();
 	}
