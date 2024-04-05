@@ -33,14 +33,14 @@ namespace MedTrackDash.Services
 		/// <summary>
 		/// Adds a new appointment to the database.
 		/// </summary>
-		/// <param name="appointmentDto">The appointment data.</param>
-		public async Task AddAppointment(AppointmentDto appointmentDto)
+		/// <param name="appointmentAddDto">The appointment data.</param>
+		public async Task AddAppointment(AppointmentAddDto appointmentAddDto)
 		{
 			var appointmentEntity = new AppointmentEntity()
 			{
-				DateTime = appointmentDto.DateTime,
-				PatientId = appointmentDto.PatientId,
-				DoctorId = appointmentDto.DoctorId
+				DateTime = appointmentAddDto.DateTime,
+				PatientId = appointmentAddDto.PatientId,
+				DoctorId = appointmentAddDto.DoctorId
 			};
 
 			_context.Appointments.Add(appointmentEntity);
@@ -137,7 +137,8 @@ namespace MedTrackDash.Services
 		{
 			var appointments = await _context.Patients
 				.Where(p => p.Id == id)
-				.Select(p => new {
+				.Select(p => new
+				{
 					Appointments = p.Appointments.Select(a => a.ToDto())
 				})
 				.FirstOrDefaultAsync();
@@ -161,6 +162,23 @@ namespace MedTrackDash.Services
 				.FirstOrDefaultAsync();
 
 			return appointments?.Appointments.ToList();
+		}
+
+		/// <summary>
+		/// Retrieves appointments for a specific date from the database.
+		/// </summary>
+		/// <param name="date">The date for which appointments should be retrieved.</param>
+		/// <returns>A list of AppointmentDto objects representing the appointments for the specified date.</returns>
+		public async Task<List<AppointmentDto>> GetAppointmentByDate(DateOnly date)
+		{
+			var appointments = await _context.Appointments
+					.Where(a => DateOnly.FromDateTime(a.DateTime) == date)
+					.Select(a => a.ToDto())
+					.ToListAsync();
+
+			_logger.LogInformation($"Retrieved appointments for date: {date}");
+
+			return appointments;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 
 using MedTrackDash.Data;
+using MedTrackDash.Extensions;
 using MedTrackDash.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -13,8 +14,8 @@ namespace MedTrackDash
 			var builder = WebApplication.CreateBuilder(args);
 
 			// Add services to the container.
-
 			builder.Services.AddControllers();
+
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();

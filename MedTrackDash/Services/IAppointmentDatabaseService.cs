@@ -7,8 +7,8 @@ public interface IAppointmentDatabaseService
 	/// <summary>
 	/// Adds a new appointment to the database.
 	/// </summary>
-	/// <param name="appointmentDto">The appointment data.</param>
-	Task AddAppointment(AppointmentDto appointmentDto);
+	/// <param name="appointmentAddDto">The appointment data.</param>
+	Task AddAppointment(AppointmentAddDto appointmentAddDto);
 
 	/// <summary>
 	/// Retrieves an appointment by its ID.
@@ -51,4 +51,11 @@ public interface IAppointmentDatabaseService
 	/// <param name="id">The ID of the patient.</param>
 	/// <returns>A list of appointments associated with the patient, or null if the patient is not found.</returns>
 	Task<List<AppointmentDto>?> GetPatientAppointments(int id);
+
+	/// <summary>
+	/// Retrieves appointments for a specific date from the database.
+	/// </summary>
+	/// <param name="date">The date for which appointments should be retrieved.</param>
+	/// <returns>A list of AppointmentDto objects representing the appointments for the specified date.</returns>
+	Task<List<AppointmentDto>> GetAppointmentByDate(DateOnly date);
 }

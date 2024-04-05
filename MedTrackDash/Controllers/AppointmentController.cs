@@ -35,7 +35,7 @@ namespace MedTrackDash.Controllers
 			return NotFound();
 		}
 
-		[HttpPut("{id}")]
+		[HttpPut("update/{id}")]
 		public async Task<IActionResult> UpdateAppointment(int id, AppointmentDto appointmentDto)
 		{
 			var success = await _appointmentDatabaseService.UpdateAppointment(id, appointmentDto);
@@ -48,10 +48,10 @@ namespace MedTrackDash.Controllers
 			return NotFound();
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> AddAppointment(AppointmentDto appointmentDto)
+		[HttpPost("add")]
+		public async Task<IActionResult> AddAppointment(AppointmentAddDto appointmentAddDto)
 		{
-			await _appointmentDatabaseService.AddAppointment(appointmentDto);
+			await _appointmentDatabaseService.AddAppointment(appointmentAddDto);
 			return Ok();
 		}
 
@@ -84,6 +84,18 @@ namespace MedTrackDash.Controllers
 		public async Task<IActionResult> GetDoctorAppointments(int id)
 		{
 			var appointments = await _appointmentDatabaseService.GetDoctorAppointments(id);
+			if (appointments != null)
+			{
+				return Ok(appointments);
+			}
+
+			return NotFound();
+		}
+
+		[HttpGet("ondate")]
+		public async Task<IActionResult> GetAppointmentsByDate([FromQuery]DateOnly date)
+		{
+			var appointments = await _appointmentDatabaseService.GetAppointmentByDate(date);
 			if (appointments != null)
 			{
 				return Ok(appointments);
