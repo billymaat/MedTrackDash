@@ -68,30 +68,6 @@ namespace MedTrackDash.Controllers
 			return NotFound();
 		}
 
-		[HttpGet("patient/{id}")]
-		public async Task<IActionResult> GetPatientAppointments(int id)
-		{
-			var appointments = await _appointmentDatabaseService.GetPatientAppointments(id);
-			if (appointments != null)
-			{
-				return Ok(appointments);
-			}
-
-			return NotFound();
-		}
-
-		[HttpGet("doctor/{id}")]
-		public async Task<IActionResult> GetDoctorAppointments(int id)
-		{
-			var appointments = await _appointmentDatabaseService.GetDoctorAppointments(id);
-			if (appointments != null)
-			{
-				return Ok(appointments);
-			}
-
-			return NotFound();
-		}
-
 		[HttpGet("ondate")]
 		public async Task<IActionResult> GetAppointmentsByDate([FromQuery]DateOnly date)
 		{

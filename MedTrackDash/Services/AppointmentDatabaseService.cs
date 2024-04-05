@@ -129,42 +129,6 @@ namespace MedTrackDash.Services
 		}
 
 		/// <summary>
-		/// Retrieves all appointments associated with a specific patient.
-		/// </summary>
-		/// <param name="id">The ID of the patient.</param>
-		/// <returns>A list of appointments associated with the patient, or null if the patient is not found.</returns>
-		public async Task<List<AppointmentDto>?> GetPatientAppointments(int id)
-		{
-			var appointments = await _context.Patients
-				.Where(p => p.Id == id)
-				.Select(p => new
-				{
-					Appointments = p.Appointments.Select(a => a.ToDto())
-				})
-				.FirstOrDefaultAsync();
-
-			return appointments?.Appointments.ToList();
-		}
-
-		/// <summary>
-		/// Retrieves all appointments associated with a specific doctor.
-		/// </summary>
-		/// <param name="id">The ID of the doctor.</param>
-		/// <returns>A list of appointments associated with the doctor, or null if the doctor is not found.</returns>
-		public async Task<List<AppointmentDto>?> GetDoctorAppointments(int id)
-		{
-			var appointments = await _context.Doctors
-				.Where(p => p.Id == id)
-				.Select(p => new
-				{
-					Appointments = p.Appointments.Select(a => a.ToDto())
-				})
-				.FirstOrDefaultAsync();
-
-			return appointments?.Appointments.ToList();
-		}
-
-		/// <summary>
 		/// Retrieves appointments for a specific date from the database.
 		/// </summary>
 		/// <param name="date">The date for which appointments should be retrieved.</param>

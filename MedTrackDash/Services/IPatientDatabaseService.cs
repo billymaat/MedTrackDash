@@ -13,4 +13,11 @@ public interface IPatientDatabaseService
 	Task<bool> AddPrescription(int patientId, PrescriptionAddDto prescriptionAddDto);
 
 	Task<List<PrescriptionDto>?> GetPatientPrescriptions(int id);
+
+	/// <summary>
+	/// Retrieves all appointments associated with a specific patient.
+	/// </summary>
+	/// <param name="id">The ID of the patient.</param>
+	/// <returns>A list of appointments associated with the patient, or null if the patient is not found.</returns>
+	Task<List<AppointmentDto>?> GetPatientAppointments(int id);
 }
