@@ -1,6 +1,5 @@
 ﻿using MedTrackDash.Dtos;
 using MedTrackDash.Entities;
-using MedTrackDash.Models;
 
 namespace MedTrackDash.Extensions
 {

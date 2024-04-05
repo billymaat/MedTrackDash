@@ -22,7 +22,14 @@
 		/// </summary>
 		public string Route { get; set; }
 
+		/// <summary>
+		/// Gets or sets the prescription foreign key
+		/// </summary>
 		public int PrescriptionId { get; set; }
+
+		/// <summary>
+		/// Gets or sets the prescription associated with the medicine.
+		/// </summary>
 		public PrescriptionEntity Prescription { get; set; }
 	}
 }
