@@ -12,6 +12,7 @@ namespace MedTrackDash
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
+			builder.Services.AddOpenApiDocument();
 
 			// Add services to the container.
 			builder.Services.AddControllers();
@@ -31,6 +32,15 @@ namespace MedTrackDash
 				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), 
 					ServiceLifetime.Transient);
 
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy(name: "MyAllowSpecificOrigins",
+					builder =>
+					{
+						builder.WithOrigins("http://localhost:4200");
+					});
+			});
+
 			var log = new LoggerConfiguration()
 				.ReadFrom.Configuration(builder.Configuration)
 				.CreateLogger();
@@ -41,11 +51,15 @@ namespace MedTrackDash
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
-				app.UseSwagger();
-				app.UseSwaggerUI();
+				//app.UseSwagger();
+				//app.UseSwaggerUI();
+				app.UseOpenApi();     // use in place of app.UseSwagger()
+				app.UseSwaggerUi();
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseCors("MyAllowSpecificOrigins");
 
 			app.UseAuthorization();
 

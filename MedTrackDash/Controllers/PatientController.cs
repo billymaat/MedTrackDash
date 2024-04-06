@@ -16,6 +16,8 @@ namespace MedTrackDash.Controllers
 		}
 
 		[HttpGet]
+		[ProducesResponseType(typeof(List<PatientDto>), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetAll()
 		{
 			var patients = await _patientDatabaseService.GetAllPatients();
