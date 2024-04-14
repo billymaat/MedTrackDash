@@ -16,5 +16,7 @@ namespace MedTrackDash.Services
 		/// <param name="id">The ID of the doctor.</param>
 		/// <returns>A list of appointments associated with the doctor, or null if the doctor is not found.</returns>
 		Task<List<AppointmentDto>?> GetDoctorAppointments(int id);
+
+		Task<List<DoctorDto>> GetDoctorsByIds(List<int> ids);
 	}
 }

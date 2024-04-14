@@ -16,6 +16,8 @@ namespace MedTrackDash.Controllers
 		}
 
 		[HttpGet]
+		[ProducesResponseType(typeof(List<AppointmentDto>), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetAllAppointments()
 		{
 			var appointments = await _appointmentDatabaseService.GetAllAppointments();

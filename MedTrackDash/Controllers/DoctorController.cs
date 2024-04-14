@@ -16,6 +16,8 @@ namespace MedTrackDash.Controllers
 		}
 
 		[HttpGet]
+		[ProducesResponseType(typeof(List<DoctorDto>), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetAll()
 		{
 			var doctors = await _doctorDatabaseService.GetAllDoctors();
@@ -23,6 +25,8 @@ namespace MedTrackDash.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetById(int id)
 		{
 			var doctor = await _doctorDatabaseService.GetDoctorById(id);
@@ -30,6 +34,21 @@ namespace MedTrackDash.Controllers
 			{
 				return Ok(doctor);
 			}
+			return NotFound();
+		}
+
+		[HttpGet("getids")]
+		[ProducesResponseType(typeof(List<PatientDto>), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> GetByIds([FromQuery] List<int> ids)
+		{
+			var doctors = await _doctorDatabaseService.GetDoctorsByIds(ids);
+
+			if (doctors != null)
+			{
+				return Ok(doctors);
+			}
+
 			return NotFound();
 		}
 

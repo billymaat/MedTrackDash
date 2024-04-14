@@ -2,6 +2,7 @@
 using MedTrackDash.Dtos;
 using MedTrackDash.Entities;
 using MedTrackDash.Extensions;
+using MedTrackDash.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedTrackDash.Services
@@ -49,6 +50,14 @@ namespace MedTrackDash.Services
 
 			_logger.LogInformation("Doctor not found in the database.");
 			return null;
+		}
+
+		public async Task<List<DoctorDto>> GetDoctorsByIds(List<int> ids)
+		{
+			var patientEntities = await _context.Doctors
+				.Where(p => ids.Contains(p.Id))
+				.ToListAsync();
+			return patientEntities.Select(o => o.ToDto()).ToList();
 		}
 
 		public async Task<List<PatientDto>?> GetDoctorPatientsById(int id)

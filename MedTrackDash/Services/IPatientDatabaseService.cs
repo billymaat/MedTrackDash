@@ -20,4 +20,6 @@ public interface IPatientDatabaseService
 	/// <param name="id">The ID of the patient.</param>
 	/// <returns>A list of appointments associated with the patient, or null if the patient is not found.</returns>
 	Task<List<AppointmentDto>?> GetPatientAppointments(int id);
+
+	Task<List<PatientDto>> GetPatientsByIds(List<int> ids);
 }

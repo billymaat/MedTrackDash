@@ -52,6 +52,15 @@ public class PatientDatabaseService : IPatientDatabaseService
 		return null;
 	}
 
+
+	public async Task<List<PatientDto>> GetPatientsByIds(List<int> ids)
+	{
+		var patientEntities = await _context.Patients
+			.Where(p => ids.Contains(p.Id))
+			.ToListAsync();
+		return patientEntities.Select(o => o.ToDto()).ToList();
+	}
+
 	public async Task<List<PatientDto>> GetAllPatients()
 	{
 		var patients = await _context.Patients
@@ -167,4 +176,5 @@ public class PatientDatabaseService : IPatientDatabaseService
 
 		return appointments?.Appointments.ToList();
 	}
+
 }

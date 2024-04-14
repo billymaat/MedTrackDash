@@ -79,6 +79,7 @@ namespace MedTrackDash.Extensions
 		{
 			return new PatientDto
 			{
+				Id = patientEntity.Id,
 				FirstName = patientEntity.FirstName,
 				Surname = patientEntity.Surname,
 				Age = patientEntity.Age,

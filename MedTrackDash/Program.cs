@@ -21,23 +21,29 @@ namespace MedTrackDash
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
-			builder.Services.AddScoped<IPatientDatabaseService, PatientDatabaseService>();
-			builder.Services.AddScoped<IDoctorDatabaseService, DoctorDatabaseService>();
-			builder.Services.AddScoped<IAppointmentDatabaseService, AppointmentDatabaseService>();
+			builder.Services.AddTransient<IPatientDatabaseService, PatientDatabaseService>();
+			builder.Services.AddTransient<IDoctorDatabaseService, DoctorDatabaseService>();
+			builder.Services.AddTransient<IAppointmentDatabaseService, AppointmentDatabaseService>();
 
 			var connectionString = builder.Configuration.GetConnectionString("AppContext");
 			builder.Services.AddDbContext<MedTrackContext>(options =>
 			
 				// options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MedTrackDashInMemoryDb"));
-				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), 
-					ServiceLifetime.Transient);
+				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+					options => options.EnableRetryOnFailure(
+						maxRetryCount: 5,
+						maxRetryDelay: System.TimeSpan.FromSeconds(30),
+						errorNumbersToAdd: null)
+					));
 
 			builder.Services.AddCors(options =>
 			{
 				options.AddPolicy(name: "MyAllowSpecificOrigins",
 					builder =>
 					{
-						builder.WithOrigins("http://localhost:4200");
+						builder.WithOrigins("http://localhost:4200")
+							.AllowAnyHeader()
+							.AllowAnyMethod();
 					});
 			});
 
