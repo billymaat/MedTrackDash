@@ -1,0 +1,24 @@
+pipelineJob('MedTrackDashApi') {
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('git@github.com:billymaat/MedTrackDash.git') // Replace with your Git repository URL
+                        credentials('billymaat-git') // Replace with your credentials ID
+                    }
+                    branch('*/master') // Replace with your branch name if different
+                }
+            }
+            scriptPath('scripts/medtrackdash.jenkinsfile')
+        }
+    }
+    description('Seed job for building MedTrackDash API')
+    logRotator {
+        daysToKeep(30)
+        numToKeep(10)
+    }
+    properties {
+        disableConcurrentBuilds()
+    }
+}

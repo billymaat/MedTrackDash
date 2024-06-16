@@ -1,0 +1,53 @@
+pipeline {
+    agent {
+        label 'agent2'
+    }
+
+    stages {
+        stage('Clean') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'git@github.com:billymaat/MedTrackDash.git', credentialsId: 'billymaat-git'
+            }
+        }
+        stage('Prep') {
+            steps {
+                script {
+                    sh 'chmod +x ./scripts/*'
+                }
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    sh './scripts/build.sh'
+                }
+            }
+        }
+        stage('Package') {
+            steps {
+                script {
+                    sh './scripts/package.sh'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build completed successfully.'
+            archiveArtifacts artifacts: '**/medtrackdash*.tar.gz', allowEmptyArchive: true
+        }
+        failure {
+            echo 'Build failed.'
+        }
+        // always {
+        //     cleanWs()
+        // }
+    }
+}
