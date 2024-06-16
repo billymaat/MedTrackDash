@@ -1,10 +1,8 @@
 
 using MedTrackDash.Data;
-using MedTrackDash.Extensions;
 using MedTrackDash.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Serilog.Extensions.Logging;
 namespace MedTrackDash
 {
 	public class Program
